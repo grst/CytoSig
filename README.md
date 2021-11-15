@@ -1,29 +1,29 @@
-CytoSig prediction model of cytokine signaling activity
+# CytoSig prediction model of cytokine signaling activity
 
-**Prerequisite**:  
-1, ridge_significance: https://github.com/data2intelligence/ridge_significance  
-Please read its README.md and run test to make sure the successful installation.  
+## Installation
 
-2, pandas >= 1.1.4: You may install anaconda (https://www.anaconda.com) to include all required python packages.  
-3, xlsxwriter >= 1.3.7: pip install --upgrade xlsxwriter  
+To install the version from this fork, use
+
+```python
+pip install git+https://github.com/grst/CytoSig.git@master[scanpy]
+```
+
+## Usage
+
+Please see `tests/prediction.py` for examples of two usages explained below.  
+### As a scanpy library (introduced in this fork)
 
 
-**Install**:
-python setup.py install
+### As a commond line script (from original version)
 
-**Test**:
-python -m unittest tests.prediction
-
-Please see **tests/prediction.py** for examples of two usages explained below.  
-
-**Usage 1, through command line**:  
-
+```bash
 CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel -s expand_signature  
+```
 
-1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
+1. input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
 The expression values, from either RNASeq or MicroArray, should be transformed by log2(x+1). x could be FPKM, RPKM, or TPM for RNASeq. For single-cell RNASeq data, we used log2(TPM/10 + 1). We also recommend quantile-normalization across conditions. Some software package, such as RMA or DESeq, will automatically include all normalizations. We recommend input differential profiles between the two conditions. If data is from a sample collection without pairs, please mean-centralize the value of each gene across all samples.
 
-2, output_prefix: prefix of output files. Each column is a biological condition, and each row is a cytokine name  
+2. output_prefix: prefix of output files. Each column is a biological condition, and each row is a cytokine name  
     output_prefix.Coef: regression coefficients  
     output_prefix.StdErr: standard error  
     output_prefix.Zscore: Coef/StdErr  
@@ -43,7 +43,9 @@ In the directory of README.md, please type: CytoSig_run.py -i tests/GSE147507.di
 Then, open "tests/output_test.xlsx" to view results  
 
 
-**Usage 2, through Python function inside your customized code**:  
+
+### As a Python function
+
 Input:  
 Y: the expression matrix of your samples in pandas data frame. Each column name is a sample ID. Each row name is a human gene symbol.  
   
