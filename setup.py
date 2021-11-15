@@ -35,7 +35,8 @@ setup(
     install_requires=[
         "numpy",
         "pandas",
-        "ridge_significance",
+        # Fix for https://github.com/data2intelligence/ridge_significance/pull/1
+        "ridge_significance @ git+https://github.com/grst/ridge_significance.git@main",
     ],
     extras_require={
         "test": ["pytest"],
